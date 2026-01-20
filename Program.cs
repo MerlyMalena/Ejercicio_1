@@ -17,62 +17,65 @@ using System.Runtime.CompilerServices;
 
 class Program
 {
-   
-    
+
+
     public class Figura
     {
-        public String color {get;set;}
-        
-        public int lados;
-        public virtual void cambiarColor()
+        public String color { get; set; }
+        public int lados { get; set; }
+
+        public Figura()
         {
-            Console.WriteLine("Color cambiado");
+            color = "Blanco";
+            lados = 0;
         }
 
     }
 
     public class Cuadrado : Figura
     {
-        public int longitud;
+        public int longitud { get; set; }
         public Cuadrado()
         {
-            color= "Blanco";
-            lados=4;
-            longitud=0;
+            lados = 4;
+            longitud = 0;
         }
 
-       
+
     }
 
     public class Rectangulo : Figura
     {
-        int lados=4;
-        int ladosCortos;
-        int ladosLargos;
+        public int largo { get; set; }
+        public int ancho { get; set; }
+
+        public Rectangulo()
+        {
+            lados = 4;
+            largo = 0;
+            ancho = 0;
+        }
     }
 
-    public class Triangulo:Figura
+
+    public class Triangulo : Figura
     {
-
-
         private static Triangulo? instancia;
 
-        int lados {get;set;}
+        public int longitudLado1 { get; set; }
 
-        int color {get;set;}
-        public int longitudLado1 {get;set;}
+        public int longitudLado2 { get; set; }
 
-        public int longitudLado2 {get;set;}
-
-        public int longitudLado3 {get;set;}
+        public int longitudLado3 { get; set; }
 
 
-        private Triangulo(){
-        lados=3;
-        longitudLado1=0;
-        longitudLado2=0;
-        longitudLado3=0;
-  
+        private Triangulo()
+        {
+            lados = 3;
+            longitudLado1 = 0;
+            longitudLado2 = 0;
+            longitudLado3 = 0;
+
         }
 
         public  static Triangulo ObtenerInstancia(){
@@ -82,9 +85,6 @@ class Program
         return instancia;
 
         }
-    
-
-
 
     }
     static void Main(string[] args)
@@ -92,14 +92,13 @@ class Program
         ArrayList figuras = new ArrayList();
         int opcion=0;
 
-
         do
         {
-
-              Console.WriteLine("Menú");
-        Console.WriteLine("1. Crear una nueva figura");
-        Console.WriteLine("2. Ver las figuras creadas");
-        Console.WriteLine("3. Salir");
+        Console.Write("");
+        Console.WriteLine("\tMenú");
+        Console.WriteLine("\t1. Crear una nueva figura");
+        Console.WriteLine("\t2. Ver las figuras creadas");
+        Console.WriteLine("\t3. Salir");
         Console.WriteLine("");
         Console.Write("\t --> ");
         opcion= int.Parse(Console.ReadLine());
@@ -120,61 +119,144 @@ class Program
                 {
                      Console.WriteLine("\t -- Crear un cuadrado --");
                      Console.WriteLine("\t ¿De qué color desea que sea su cuadrado?");
+                     Console.Write("\t --> ");
 
                     Cuadrado c1 = new Cuadrado();
                     c1.color = Console.ReadLine();
 
-                    Console.WriteLine("\t ¿De qué longitud desea que sean los lados?");
-                   
-                    c1.longitud = int.Parse(Console.ReadLine());
+                    Console.WriteLine("\t ¿De qué longitud desea que sean los lados (cm)?");
+                    Console.Write("\t --> ");
 
-                    Console.WriteLine("El color de su cuadrado es: "+ c1.color);
-                    Console.WriteLine("La longitud de su cuadrado es: "+ c1.longitud);
+                    c1.longitud = int.Parse(Console.ReadLine());
+                    if (c1.longitud <= 0)
+                    {
+                        do
+                        {
+                            Console.WriteLine("\tEste valor no es válido. Debe de ser un número mayor a 0 ");
+                            Console.Write("\t --> ");
+                            c1.longitud = int.Parse(Console.ReadLine());
+                        }
+                        while(c1.longitud<=0);
+                    }
+
+                    Console.WriteLine("\tEl color de su cuadrado es: "+ c1.color);
+                    Console.WriteLine("\tLa longitud de su cuadrado es: "+ c1.longitud);
 
                     figuras.Add(c1);
 
-                    foreach (object item in figuras)
-                    {
-                        if (item is Cuadrado cuad)
-                        Console.WriteLine("Cuadrado. Color:"+cuad.color+ "\nLongitud:"+cuad.longitud);
-                    }
-                    Console.WriteLine("Presione cualquier tecla para continuar");
+                    Console.WriteLine("\tPresione cualquier tecla para continuar");
                     Console.ReadKey();
                 }
 
                 else if (opcionFigura == 2)
                 {
                     Console.WriteLine("\t -- Crear un rectangulo --");
+                    Console.WriteLine("\t ¿De qué color desea que sea su rectángulo (cm)?");
+                     Console.Write("\t --> ");
+
+                    Rectangulo r1 = new Rectangulo();
+                    r1.color = Console.ReadLine();
+
+                    Console.WriteLine("\t ¿De qué longitud desea que sea el ancho (cm)?");
+                    Console.Write("\t --> ");
+
+                    r1.ancho = int.Parse(Console.ReadLine());
+                    if (r1.ancho <= 0)
+                    {
+                        do
+                        {
+                            Console.WriteLine("\tEste valor no es válido. Debe de ser un número mayor a 0 ");
+                            Console.Write("\t --> ");
+                            r1.ancho= int.Parse(Console.ReadLine());
+                        }
+                        while(r1.ancho<=0);
+                    }
+                    
+                     Console.WriteLine("\t ¿De qué longitud desea que sea el ancho (cm)?");
+                    Console.Write("\t --> ");
+
+                    r1.largo = int.Parse(Console.ReadLine());
+                    if (r1.largo <= 0)
+                    {
+                        do
+                        {
+                            Console.WriteLine("\tEste valor no es válido. Debe de ser un número mayor a 0 ");
+                            Console.Write("\t --> ");
+                            r1.largo= int.Parse(Console.ReadLine());
+                        }
+                        while(r1.largo<=0);
+                    }
+
+                    Console.WriteLine("\tEl color de su rectangulo es: "+ r1.color);
+                    Console.WriteLine("\tEl ancho de  de su rectangulo es: "+ r1.ancho);
+                    Console.WriteLine("\tEl largo de  de su rectangulo es: "+ r1.largo);
+
+                    figuras.Add(r1);
+
+                    Console.WriteLine("\tPresione cualquier tecla para continuar");
+                    Console.ReadKey();
+
                 }
 
                  else if (opcionFigura == 3)
                 {
                     Console.WriteLine("\t -- Crear un triangulo --");
                     Console.WriteLine("\t ¿De qué color desea que sea su triángulo?");
+                    Console.Write("\t --> ");
                     var t1 = Triangulo.ObtenerInstancia();
                     t1.color=Console.ReadLine();
 
-                    Console.WriteLine("\t ¿De qué tamaño desea el primer lado de su triángulo?");
+                    Console.WriteLine("\t ¿De qué tamaño desea el primer lado de su triángulo (cm)?");
+                    Console.Write("\t --> ");
                     t1.longitudLado1=int.Parse(Console.ReadLine());
+                     if (t1.longitudLado1 <= 0){
+                    do
+                        {
+                            Console.WriteLine("\tEste valor no es válido. Debe de ser un número mayor a 0 ");
+                            Console.Write("\t --> ");
+                             t1.longitudLado1=int.Parse(Console.ReadLine());
+                        }
+                     while(t1.longitudLado1<=0);
+                     }
 
-                    Console.WriteLine("\t ¿De qué tamaño desea el segundo lado de su triángulo?");
+                    Console.WriteLine("\t ¿De qué tamaño desea el segundo lado de su triángulo (cm)?");
+                    Console.Write("\t --> ");
                     t1.longitudLado2=int.Parse(Console.ReadLine());
 
-                    Console.WriteLine("\t ¿De qué tamaño desea el tercer lado de su triángulo?");
-                    t1.longitudLado3=int.Parse(Console.ReadLine());
+                     if (t1.longitudLado2 <= 0){
+                    do
+                        {
+                            Console.WriteLine("\tEste valor no es válido. Debe de ser un número mayor a 0 ");
+                            Console.Write("\t --> ");
+                             t1.longitudLado2=int.Parse(Console.ReadLine());
+                        }
+                     while(t1.longitudLado2<=0);
+                     }
 
-                    Console.WriteLine("El triangulo tiene los siguientes lados: "+t1.longitudLado1+", "+t1.longitudLado2+", "+t1.longitudLado3);
-                    Console.WriteLine("El color de su triangulo es: "+ t1.color);
+                    Console.WriteLine("\t ¿De qué tamaño desea el tercer lado de su triángulo (cm)?");
+                    Console.Write("\t --> ");
+                    t1.longitudLado3 = int.Parse(Console.ReadLine());
+                     if (t1.longitudLado3 <= 0){
+                    do
+                        {
+                            Console.WriteLine("\tEste valor no es válido. Debe de ser un número mayor a 0 ");
+                            Console.Write("\t --> ");
+                             t1.longitudLado3=int.Parse(Console.ReadLine());
+                        }
+                     while(t1.longitudLado3<=0);
+                     }
 
-                     figuras.Add(t1);
+                    Console.WriteLine("\tEl triangulo que ha creado tiene los siguientes lados: " + t1.longitudLado1 + ", " + t1.longitudLado2 + ", " + t1.longitudLado3);
+                    Console.WriteLine("\tEl color de su triangulo es: " + t1.color);
 
-                    foreach (object item in figuras)
+                    if (!figuras.Contains(t1))
                     {
-                        if (item is Triangulo tr)
-                        Console.WriteLine("Triangulo. Color:"+tr.color+ "\nLongitud:"+tr.longitudLado1+", "+t1.longitudLado2+", "+t1.longitudLado3);
+                        figuras.Add(t1);
                     }
-                    Console.WriteLine("Presione cualquier tecla para continuar");
+
+                    Console.WriteLine("\tPresione cualquier tecla para continuar");
                     Console.ReadKey();
+                     Console.WriteLine("");
                 }
 
 
@@ -182,23 +264,36 @@ class Program
 
             else if (opcion == 2)
             {
-                  Console.WriteLine("\t -- Lista de figuras creadas --");
-                  Console.WriteLine("\t -- Triangulos--");
+                Console.WriteLine("\t -- Lista de figuras creadas --");
+                Console.WriteLine("");
+
+                if (figuras.Count == 0)
+                {
+                    Console.WriteLine("\tNo se ha creado ninguna figura todavía. Intente creando una primero.");
+                }
 
                 foreach (object item in figuras)
                 {
                     if (item is Triangulo tr)
                     {
-                        Console.WriteLine("\tTriangulo. Color:" + tr.color + "\nLongitud:" + tr.longitudLado1 + ", " + tr.longitudLado2 + ", " + tr.longitudLado3);
+                        Console.WriteLine("\tTriangulo. \n\tColor:" + tr.color + "\n\tLongitud:" + tr.longitudLado1 + ", " + tr.longitudLado2 + ", " + tr.longitudLado3 +"\n");
                     }
-                    else
+
+                    else if (item is Cuadrado cu)
                     {
-                    Console.WriteLine("No se han creado triángulos");
+                        Console.WriteLine("\tCuadrado. \n\tColor:" + cu.color + "\n\tLongitud:" + cu.longitud+"\n");
                     }
+
+                    else if (item is Rectangulo rec)
+                    {
+                        Console.WriteLine("\tRectángulo. \n\tColor:" + rec.color + "\n\tLargo:" + rec.largo + "\n\tAncho" + rec.ancho+"\n");
+                    }
+                   
                 }
 
-                Console.WriteLine("Presione cualquier tecla para continuar");
+                Console.WriteLine("\tPresione cualquier tecla para continuar");
                 Console.ReadKey();
+                Console.WriteLine("");
             }
         }
         while(opcion!=3);
