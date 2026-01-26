@@ -12,8 +12,8 @@
 
 using System;
 using System.Drawing;
-using System.Collections;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+
 
 class Program
 {
@@ -30,6 +30,17 @@ class Program
             lados = 0;
         }
 
+        public virtual void Imprimir() {
+        Console.WriteLine($"Figura de color {color}");
+    }
+
+        public virtual void calcularArea()
+        {
+            double area=0;
+            System.Console.WriteLine($"El área de la figura es: {area}");
+           
+        }
+
     }
 
     public class Cuadrado : Figura
@@ -39,6 +50,17 @@ class Program
         {
             lados = 4;
             longitud = 0;
+        }
+
+        public override void Imprimir() {
+        Console.WriteLine($"Cuadrado\n - Color: {color}\n, -Longitud: {longitud}");
+    }
+        public override void calcularArea()
+        {
+            double area=longitud*longitud;
+            double areaRedondeada = Math.Round(area, 1);
+            area=areaRedondeada;
+            System.Console.WriteLine($"El área del cuadrado es: {area}");
         }
 
 
@@ -54,6 +76,17 @@ class Program
             lados = 4;
             largo = 0;
             ancho = 0;
+        }
+
+          public override void Imprimir() {
+        Console.WriteLine($"Rectangulo\n - Color: {color}\n, Largo: {largo}\n, Ancho: {ancho}\n");
+    }
+         public override void calcularArea()
+        {
+            double area=largo*ancho;
+            double areaRedondeada = Math.Round(area, 1);
+            area=areaRedondeada;
+            System.Console.WriteLine($"El área del rectángulo es: {area}");
         }
     }
 
@@ -78,6 +111,22 @@ class Program
 
         }
 
+         public override void calcularArea()
+        {
+            
+            double semiperimetro=(longitudLado1+longitudLado2+longitudLado3)/2.0;
+            double area=Math.Sqrt(semiperimetro*(semiperimetro-longitudLado1)*(semiperimetro-longitudLado2)*(semiperimetro-longitudLado3));
+            double areaRedondeada = Math.Round(area, 1);
+            area=areaRedondeada;
+           System.Console.WriteLine($"El área del triángulo es: {area} cm.");
+        }
+
+         public override void Imprimir() {
+        Console.WriteLine($"Triangulo\n - Color: {color}\n, Lado 1: {longitudLado1}\n, Lado 2: {longitudLado2}\n, Lado 3:{longitudLado3}\n");
+    }
+
+        
+
         public  static Triangulo ObtenerInstancia(){
         if (instancia==null){
             instancia= new Triangulo();
@@ -89,7 +138,7 @@ class Program
     }
     static void Main(string[] args)
     {
-        ArrayList figuras = new ArrayList();
+       List<Figura> figuras = new List<Figura>();
         int opcion=0;
 
         do
@@ -200,10 +249,16 @@ class Program
 
                  else if (opcionFigura == 3)
                 {
+                    var t1 = Triangulo.ObtenerInstancia();
+                    if (figuras.Contains(t1))
+                    {
+                        Console.WriteLine("Ya se ha creado un triángulo. No puede crearse otro más.");
+                    }
+                    else {
                     Console.WriteLine("\t -- Crear un triangulo --");
                     Console.WriteLine("\t ¿De qué color desea que sea su triángulo?");
                     Console.Write("\t --> ");
-                    var t1 = Triangulo.ObtenerInstancia();
+                    
                     t1.color=Console.ReadLine();
 
                     Console.WriteLine("\t ¿De qué tamaño desea el primer lado de su triángulo (cm)?");
@@ -249,10 +304,12 @@ class Program
                     Console.WriteLine("\tEl triangulo que ha creado tiene los siguientes lados: " + t1.longitudLado1 + ", " + t1.longitudLado2 + ", " + t1.longitudLado3);
                     Console.WriteLine("\tEl color de su triangulo es: " + t1.color);
 
-                    if (!figuras.Contains(t1))
-                    {
-                        figuras.Add(t1);
+                
+                    figuras.Add(t1);
+                    
                     }
+
+                  
 
                     Console.WriteLine("\tPresione cualquier tecla para continuar");
                     Console.ReadKey();
@@ -272,22 +329,10 @@ class Program
                     Console.WriteLine("\tNo se ha creado ninguna figura todavía. Intente creando una primero.");
                 }
 
-                foreach (object item in figuras)
+                foreach (var item in figuras)
                 {
-                    if (item is Triangulo tr)
-                    {
-                        Console.WriteLine("\tTriangulo. \n\tColor:" + tr.color + "\n\tLongitud:" + tr.longitudLado1 + ", " + tr.longitudLado2 + ", " + tr.longitudLado3 +"\n");
-                    }
-
-                    else if (item is Cuadrado cu)
-                    {
-                        Console.WriteLine("\tCuadrado. \n\tColor:" + cu.color + "\n\tLongitud:" + cu.longitud+"\n");
-                    }
-
-                    else if (item is Rectangulo rec)
-                    {
-                        Console.WriteLine("\tRectángulo. \n\tColor:" + rec.color + "\n\tLargo:" + rec.largo + "\n\tAncho" + rec.ancho+"\n");
-                    }
+                    item.Imprimir();
+                    item.calcularArea();
                    
                 }
 
